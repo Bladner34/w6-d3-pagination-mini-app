@@ -21,18 +21,24 @@ async function getInformation(url){
     }
 };
 //Main Function
-prev.addEventListener("click", async ()=>{
-    console.log("click prev");
-});
-next.addEventListener("click", async ()=>{
-    console.log("click next");
-});
 
 async function main(){
     try {
         const rick = await getInformation(
-          "https://rickandmortyapi.com/api/location/" + rickAndMortyId);
-        console.log("ready to fetch")
+          "https://rickandmortyapi.com/api/character/" + rickAndMortyId);
+          console.log(rick)
+        prev.addEventListener("click", async () => {
+          const rick = await getInformation(
+            "https://rickandmortyapi.com/api/character/" + rickAndMortyId);
+            console.log(rick);
+        });
+        next.addEventListener("click", async () => {
+            rickAndMortyId++
+          const rick = await getInformation(
+            "https://rickandmortyapi.com/api/character/" + rickAndMortyId
+          );
+          console.log(rick);
+        });
     } catch (error) {
         console.error(error)
     }
