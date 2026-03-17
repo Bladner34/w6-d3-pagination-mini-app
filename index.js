@@ -36,6 +36,12 @@ async function getInformation(url){
         if(res.status !== 200){
             throw new Error("Failed to fetch information");
         }
+        if (res.status == 429){
+          throw new Error("Too Many Requests");
+        }
+         if (res.status == 403){
+           throw new Error("Forbidden");
+         }
         const rick = await res.json();
         return rick; 
     } catch (error) {
@@ -47,21 +53,24 @@ async function getInformation(url){
 async function main(){
     try {
         const rick = await getInformation(
-          "https://rickandmortyapi.com/api/character/" + rickAndMortyId);
+          "https://rickandmortyapi.com/api/character/" + rickAndMortyId,
+        );
           console.log(rick)
         prev.addEventListener("click", async () => {
            if(rickAndMortyId < 2){
             return
            } rickAndMortyId--
           const rick = await getInformation(
-            "https://rickandmortyapi.com/api/character/" + rickAndMortyId);
+            "https://rickandmortyapi.com/api/character/" + rickAndMortyId,
+          );
             console.log(rick);
             render(rick)
         });
         next.addEventListener("click", async () => {
             rickAndMortyId++
           const rick = await getInformation(
-            "https://rickandmortyapi.com/api/character/" + rickAndMortyId);
+            "https://rickandmortyapi.com/api/character/" + rickAndMortyId,
+          );
             console.log(rick);
             render(rick)
         });
